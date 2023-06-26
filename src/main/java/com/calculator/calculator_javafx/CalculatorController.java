@@ -81,7 +81,7 @@ public class CalculatorController {
         String[] operands = display.getText().trim().split(" ");
         StringBuilder tmp = new StringBuilder();
         if (operands.length == 1) {
-            display.setText(sqrt + " " + operands[0]);
+            display.setText(sqrt + " " + ((operands[0].equals("0")) ? "" : operands[0]));
         } else {
             for (int i = 0; i < operands.length; i++) {
                 tmp.append(operands[i]).append(" ");
@@ -121,18 +121,21 @@ public class CalculatorController {
                 case "-" -> display.setText(String.valueOf(Double.parseDouble(operands[i - 1]) - Double.parseDouble(operands[i + 1])));
                 case "*" -> display.setText(String.valueOf(Double.parseDouble(operands[i - 1]) * Double.parseDouble(operands[i + 1])));
                 case "/" -> display.setText(String.valueOf(Double.parseDouble(operands[i - 1]) / Double.parseDouble(operands[i + 1])));
-                case "√" -> display.setText(String.valueOf(Math.sqrt(Double.parseDouble(operands[i+1]))));
+                case "" -> {
+                    break;
+                }
+
             }
         }
     }
 
-    private void calc(String[] operands) {
+    private void calc(String[] operands) { //todo выводить корень в выражении и без
         double d = 0d;
         for(int i = 0; i < operands.length; i++) {
             if(operands[i].equals("√")) {
                 d = Math.sqrt(Double.parseDouble(operands[i + 1]));
                 operands[i] = String.valueOf(d);
-                operands[i+1] = "";
+                operands[i+1] = "_";
             }
         }
     }
